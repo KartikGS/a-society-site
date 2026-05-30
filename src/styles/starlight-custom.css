@@ -10,6 +10,7 @@
   --sl-color-accent-low: hsl(171, 60%, 15%);
   --sl-color-accent: #5EEAD4;
   --sl-color-accent-high: hsl(171, 77%, 85%);
+
 }
 
 :root[data-theme='dark'] {
@@ -29,10 +30,31 @@
   --sl-color-gray-6: #0f172a;
 }
 
+/* Center main content only */
+.content-panel .sl-container {
+  margin-inline: auto;
+  max-width: 52rem;
+}
+
+/* Layout — wider content, narrower right sidebar */
+.main-pane {
+  flex: 1 1 auto !important;
+  min-width: 0;
+}
+.right-sidebar-container {
+  flex: 0 0 20rem !important;
+  width: 20rem !important;
+}
+.right-sidebar {
+  width: 20rem !important;
+}
+
+
 /* Nav logo sizing */
 .site-title {
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: var(--sl-color-white);
 }
 
 /* Sidebar nav links */
@@ -70,7 +92,7 @@
 .sl-markdown-content th {
   background: rgba(94, 234, 212, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 1.5rem;
   text-align: left;
   font-size: 0.8125rem;
   text-transform: uppercase;
@@ -79,11 +101,19 @@
 }
 .sl-markdown-content td {
   border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 1.5rem;
   font-size: 0.9375rem;
 }
 .sl-markdown-content tr:hover td {
   background: rgba(255, 255, 255, 0.02);
+}
+.sl-markdown-content th:first-child,
+.sl-markdown-content td:first-child {
+  padding-inline-start: 1.5rem !important;
+}
+.sl-markdown-content th:last-child,
+.sl-markdown-content td:last-child {
+  padding-inline-end: 1.5rem !important;
 }
 
 /* Blockquote */

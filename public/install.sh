@@ -6,8 +6,8 @@
 # make any system-level changes.
 #
 # Usage:
-#   curl -fsSL https://a-society.ai/install.sh | bash
-#   curl -fsSL https://a-society.ai/install.sh | bash -s -- /path/to/workspace
+#   curl -fsSL https://a-society.dev/install.sh | bash
+#   curl -fsSL https://a-society.dev/install.sh | bash -s -- /path/to/workspace
 #
 # After install:
 #   npm --prefix ./a-society/runtime start
@@ -92,4 +92,4 @@ printf "  ${DIM}Start the runtime:${RESET}\n"
 printf "    ${CYAN}npm --prefix ${TARGET}/runtime start${RESET}\n\n"
 printf "  ${DIM}Then open:${RESET}\n"
 printf "    ${CYAN}http://localhost:3000${RESET}\n\n"
-printf "  ${DIM}Docs:${RESET} https://a-society.ai/docs/getting-started\n\n"
+printf "  ${DIM}Docs:${RESET} https://a-society.dev/docs/getting-started\n\n"

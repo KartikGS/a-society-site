@@ -9,7 +9,7 @@ This page explains the mental models behind A-Society. Understanding these will 
 
 ## What is `a-docs/`?
 
-`a-docs/` is the agent documentation layer for a project. It is a structured set of files that agents read at the start of a session to orient themselves to the project — without requiring the human to re-explain everything from scratch.
+`a-docs/` is the agent documentation layer for a project. It is a structured set of files that agents read to orient themselves to the project — without requiring the human to re-explain everything from scratch.
 
 A complete `a-docs/` layer tells an arriving agent:
 
@@ -21,18 +21,17 @@ A complete `a-docs/` layer tells an arriving agent:
 - What the project remembers (decisions, standing context, flow records)
 - How to verify their work (compliance is checkable, not assumed)
 
-**`a-docs/` is not a snapshot of a finished project.** It starts rough and improves alongside the project. A vague vision produces rough `a-docs/`; as the vision sharpens, the Curator brings the documentation in line.
+**`a-docs/` is not a snapshot of a finished project.** It starts rough and improves alongside the project. A vague vision produces rough `a-docs/`; as the vision sharpens, any role that touches a surface can update it, and the documentation improves alongside the project.
 
 ### What's in a typical `a-docs/`
 
 | Path | Contents |
 |---|---|
-| `agents.md` | Entry point — the first file any agent reads |
+| `agents.md` | Universal rules — constraints and conventions that apply to every agent regardless of role |
 | `project-information/` | Vision, structure, architecture, and principles |
 | `roles/` | Role definitions, ownership files, required readings |
 | `indexes/` | File path index — single source of truth for all key paths |
 | `workflow/` | Canonical workflow definition for the project |
-| `records/` | Convention file and all completed flow record folders |
 | `communication/` | Conversation templates and coordination protocols |
 | `improvement/` | Backward-pass and meta-analysis instructions |
 
@@ -75,10 +74,10 @@ A workflow does not prevent you from working outside it. The Owner can choose to
 
 A flow is a single unit of work routed through the workflow. It has:
 
-- A **record folder** in `a-docs/records/` with a unique timestamp ID
+- A **record folder** in `.a-society/state/{project}/{flow-id}/record/` with a unique timestamp ID
 - A `record.yaml` with the flow ID, name, and summary
 - A `workflow.yaml` representing the active forward-pass path
-- **Sequenced artifacts**: `01-owner-workflow-plan.md`, `02-owner-to-curator.md`, etc.
+- Artifact files produced during the flow
 
 The forward pass is the work-delivery phase. The backward pass is the reflection phase.
 

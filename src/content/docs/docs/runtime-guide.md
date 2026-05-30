@@ -5,10 +5,6 @@ description: Operator-facing reference for the A-Society runtime — starting th
 
 The A-Society runtime is a local Node.js server with a browser UI. This guide covers everything you need to operate it day-to-day.
 
-> **Canonical source:** `runtime/INVOCATION.md` in the A-Society repository is the authoritative operator reference. This guide presents the same information in a more narrative form.
-
----
-
 ## Starting the runtime
 
 ```bash
@@ -22,14 +18,19 @@ The runtime starts at **[http://localhost:3000](http://localhost:3000)** by defa
 
 | Variable | Default | Description |
 |---|---|---|
-| `PORT` | `3000` | HTTP port for the local server |
-| `WORKSPACE_ROOT` | parent of `a-society/` | Root directory scanned for projects |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | — | OpenTelemetry OTLP endpoint (optional) |
+| `A_SOCIETY_UI_PORT` | `3000` | HTTP port for the local server |
+| `A_SOCIETY_WORKSPACE_ROOT` | `INIT_CWD` or `cwd` | Absolute path to the workspace root |
+| `A_SOCIETY_TELEMETRY_ENABLED` | `true` | Set to `false` to disable telemetry bootstrapping |
+| `A_SOCIETY_OTLP_ENDPOINT` | — | OTLP/HTTP collector endpoint |
+| `A_SOCIETY_OTLP_HEADERS` | — | Comma-separated `key=value` headers for the OTLP exporter |
+| `A_SOCIETY_OTLP_METRICS_INTERVAL` | `60000` | Metrics export interval in milliseconds |
+| `A_SOCIETY_TELEMETRY_PAYLOAD_CAPTURE` | `false` | Capture prompt/turn payload snippets in span events (may include sensitive data) |
+| `A_SOCIETY_ENVIRONMENT` | — | Sets the `deployment.environment` resource attribute |
 
-Set variables before starting:
+Variables can be set inline or in a `runtime/.env` file (copy `runtime/.env.sample` to get started):
 
 ```bash
-PORT=4000 npm --prefix ./a-society/runtime start
+A_SOCIETY_UI_PORT=4000 npm --prefix ./a-society/runtime start
 ```
 
 ---
@@ -66,7 +67,7 @@ A **flow** is a single unit of work routed through the workflow. Each flow has:
 - A **record folder** with a unique timestamp ID (e.g., `20260527T143000123Z-a1b2c3`)
 - A `record.yaml` with the flow ID, name, and summary
 - A `workflow.yaml` tracking the active forward-pass path
-- Sequenced artifact files (`01-owner-workflow-plan.md`, `02-owner-to-curator.md`, etc.)
+- Artifact files produced during the flow
 
 ### Opening a flow
 
@@ -82,23 +83,41 @@ When a flow is active, the UI switches to Flow View:
   - 🔵 Active — current node
   - 🟢 Complete — successfully closed
   - 🟡 Needs attention — waiting for a decision or approval
-- **Role handoff** — when the Owner routes work to a downstream role, the UI shows the handoff artifact and prompts you to start the next session
+- **Role handoff** — when a node emits a valid handoff, the runtime automatically loads the next node and starts the appropriate role session
 
 ### Session continuity
 
-Sessions survive server restarts. If you close the browser or restart the runtime, reopening the flow at `localhost:3000` restores the active node and its context. Partially completed role turns are recoverable from the saved session state.
+Sessions survive server restarts. If you close the browser or restart the runtime, reopening the UI and selecting the flow restores the active node and its context. Partially completed role turns are recoverable from the saved session state. Use the **Resume** button to continue a flow that was waiting on human input or was interrupted mid-turn.
 
 ### Tool permissions
 
-Each flow can run in one of three permission modes:
+The runtime uses a consent gate that intercepts sensitive tool calls before they execute. There are three modes:
 
-| Mode | Behavior |
-|---|---|
-| **Interactive** | Prompts for permission on each tool call |
-| **Auto-approve safe** | Auto-approves read-only and reversible tools; prompts for destructive ones |
-| **Full auto** | Approves all tool calls without prompting |
+| Mode | File writes | Bash commands |
+|---|---|---|
+| **No access** (default) | Require approval | Require approval (except safe read-only commands) |
+| **Partial access** | Always allowed | Allowed if previously approved in this flow |
+| **Full access** | Always allowed | Always allowed |
 
-Set the permission mode from the flow settings panel before starting a role session.
+The mode can be changed at any point during a flow from the UI. It persists for the duration of the flow run.
+
+**Approval decisions:**
+
+- **Allow once** — approves the specific operation and resumes the session; does not persist
+- **Allow flow** — approves the operation, remembers it for the rest of the flow, and switches the mode to partial access
+- **Deny** — blocks the operation and pauses the node for your guidance
+
+**Auto-allowed without prompting:**
+
+A small set of bash commands are always permitted regardless of mode: `pwd` (no arguments) and `ls` with safe relative paths (no `..`, no absolute paths, no shell control characters). Everything else requires explicit approval in no-access mode.
+
+**Flow-scoped bash memory:**
+
+Bash approvals granted with Allow flow are remembered for the rest of the flow by exact command string. Any role running the same command later in the same flow proceeds without re-prompting. Approvals do not carry over to new flows.
+
+**On resume:**
+
+Consent prompts that were pending when the runtime shut down are treated as denied on restart. The node remains paused and waits for your input before continuing.
 
 ---
 
@@ -118,29 +137,80 @@ You interact with the Owner through a standard chat interface. The Owner may ask
 
 ## Backward pass and improvement protocol
 
-After the forward pass closes, the runtime offers:
+When the forward pass closes, the runtime pauses and offers three options — **graph-based**, **parallel**, or **none**. This is a per-flow decision; your choice here does not carry over to future flows.
 
-1. **Backward-pass meta-analysis** — each participating role runs a findings session reflecting on what worked, what caused friction, and what patterns could generalize. Runs locally; no upstream sharing.
+### Graph-based meta-analysis
 
-2. **Upstream feedback** (optional) — after backward pass completes, the runtime asks whether to generate an A-Society feedback artifact for the just-closed flow. This requires your explicit decision. If you say Yes, the runtime writes one markdown report to `a-society/feedback/`. If you say No, the flow closes without any upstream artifact.
+The runtime computes the backward-pass order from the workflow DAG. Roles run in reverse order of their first appearance in the forward pass — terminal roles reflect first, earlier roles reflect later. Roles that ran later in the forward pass inject their findings into earlier roles as they complete, so each role can see what its downstream counterpart observed before writing its own findings.
 
-Consent for one flow does not imply consent for future flows.
+This mode is appropriate when the workflow has a meaningful dependency chain and you want each role's reflection to be informed by what came after it.
+
+### Parallel meta-analysis
+
+All non-Owner roles run their findings sessions concurrently, without waiting for or reading each other's output. The Owner runs after all of them complete. No findings are cross-injected between peer roles.
+
+This mode is faster and appropriate for flows where the roles worked independently and cross-role dependency in the reflection is not needed.
+
+### Findings files
+
+Each participating role writes a findings file to `{record-folder}/findings/{role}-findings.md`. The runtime enforces the exact path and verifies the file exists before accepting the role's handoff. In graph-based mode, these files are injected into predecessor roles as context. In both modes, all findings files are injected into the feedback step.
+
+### Upstream feedback
+
+A-Society is itself a framework that evolves. As you use it across projects, the agents running inside it will encounter gaps, ambiguities, or patterns that could make the framework better for everyone. The upstream feedback step is how those observations get captured.
+
+After meta-analysis completes, the runtime asks separately whether to run a feedback pass. This is a second consent gate — independent of your meta-analysis choice. If you approve, a dedicated feedback role reviews all the findings from the just-completed backward pass and produces a single markdown report identifying what, if anything, should change in A-Society itself — not in your project's `a-docs/`, but in the shared framework layer.
+
+The report is written locally to `a-society/feedback/{project}-{flow-id}.md`. It is for your review. You read it, decide whether the suggestions are worth sharing, redact anything sensitive, and optionally open a pull request to the A-Society repository. The runtime does not do this automatically — the file includes a suggested PR title and body so the submission is low-friction when you do choose to share.
+
+If you decline, the flow closes with no feedback artifact. Approval for one flow does not carry over to future flows.
 
 ---
 
 ## OpenTelemetry observability
 
-The runtime exports traces and metrics via OpenTelemetry. Set `OTEL_EXPORTER_OTLP_ENDPOINT` to your OTLP collector endpoint to enable:
+The runtime exports traces, metrics, and logs via OpenTelemetry following the [GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/). A pre-configured local observability stack is included at `runtime/observability/` — Tempo for traces, Prometheus for metrics, Loki for logs, and Grafana for visualization.
 
-- Per-session trace spans
-- Tool call counts and latencies
-- Prompt and completion token metrics per model call
-- Backward-pass phase timing
+**Starting the local stack:**
 
-Without a configured endpoint, telemetry is collected but not exported.
+Docker is required. From your workspace:
+
+```bash
+docker compose -f ./a-society/runtime/observability/docker-compose.yaml up -d
+```
+
+Grafana opens at **[http://localhost:13000](http://localhost:13000)**. The OTLP collector listens at `http://localhost:14318`.
+
+Set `A_SOCIETY_OTLP_ENDPOINT` to point the runtime at the collector:
+
+```bash
+A_SOCIETY_OTLP_ENDPOINT=http://localhost:14318 npm --prefix ./a-society/runtime start
+```
+
+Or add it to `runtime/.env`.
+
+**Traces:**
+- Per-turn spans (`llm.gateway.execute_turn`) wrapping the full tool loop for each role turn
+- Per-API-call spans for each model request, with input and output token counts as span attributes (GenAI semantic conventions)
+- Backward-pass spans (`improvement.orchestrate`) covering the full improvement phase
+
+**Metrics:**
+- `a_society.flow.started` / `a_society.flow.completed` — flow lifecycle counters
+- `a_society.session.turn.started` — turn counter per role session
+- `a_society.session.turn.duration` — turn duration histogram
+- `a_society.handoff.parse_failure` — counter for malformed handoff blocks
+- `gen_ai.client.operation.duration` — model API call duration histogram (per provider)
+
+**Logs:**
+
+Structured logs are exported to the same endpoint via the OTLP logs signal and available in Grafana via Loki.
 
 ---
 
 ## Stopping the runtime
 
-`Ctrl+C` in the terminal window. Active sessions are checkpointed to disk before shutdown; in-flight LLM calls complete if the shutdown timeout allows.
+Press `Ctrl+C` in the terminal window.
+
+If there are active role sessions running, the first `Ctrl+C` aborts them gracefully — in-flight LLM calls are cancelled and each running node is checkpointed to disk as an awaiting-human node. The server stays alive. You can reconnect, select the flow, and resume from where it stopped.
+
+If no sessions are active, or after the first `Ctrl+C` has cleared them, a second `Ctrl+C` exits the process.

@@ -50,9 +50,9 @@ Fill in the Settings panel:
 | **API key** | From your provider's dashboard |
 | **Model ID** | From your provider's model catalog |
 
-**Anthropic:** Get your API key from the [Anthropic Console](https://console.anthropic.com). Recommended model: `claude-sonnet-4-6`.
+**Anthropic:** Get your API key from the [Anthropic Console](https://console.anthropic.com).
 
-**OpenAI:** Get your API key from the [OpenAI Platform](https://platform.openai.com). Any `gpt-4o` or later model works well.
+**OpenAI:** Get your API key from the [OpenAI Platform](https://platform.openai.com).
 
 **Compatible APIs:** Any provider offering an OpenAI-compatible base URL works. Enter the base URL in the Provider field.
 
@@ -64,7 +64,7 @@ Click **Save** then **Set as Active**. The settings panel closes and you're take
 
 The project selector shows three categories:
 
-**Initialized projects** — projects with a complete `a-docs/` layer. Click any of these to open a flow.
+**Initialized projects** — projects with a complete `a-docs/` layer. Click any of these to see its existing records and open a new one.
 
 **Uninitialized projects** — project folders found in your workspace that lack `a-docs/`. Click one to run the scaffold and initialization flow.
 
@@ -86,13 +86,11 @@ This typically takes one focused session. Once complete, the project is initiali
 
 From the initialized project view, click **New Record**. The runtime opens a draft flow and routes it to the Owner node. The Owner reads the active context (your `a-docs/`, the workflow contract, and any relevant handoff artifacts) and asks what you want to work on.
 
-From there, the runtime routes work through the appropriate roles, preserves sequenced artifacts in the flow record, and guides you to closure.
-
 ---
 
 ## What happens at the end of a flow
 
-When the forward pass closes, the runtime offers backward-pass meta-analysis: each participating role reflects on what went well, what caused friction, and what could improve. This runs locally. After the backward pass, the runtime asks whether to generate upstream feedback for A-Society — this step is optional and requires your explicit decision.
+When the forward pass closes, the runtime optionally runs a backward-pass meta-analysis: each participating role reflects on what went well, what caused friction, and what could improve. The runtime offers two modes — **graph-based** (roles reflect in reverse order of participation, following the flow structure) or **parallel** (all participating roles reflect concurrently). Afterward, the runtime optionally asks whether to generate upstream feedback for A-Society.
 
 ---
 

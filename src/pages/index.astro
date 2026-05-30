@@ -7,11 +7,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A-Society is a reusable, portable agentic harness for project work: structured memory, role-based workflows, runtime orchestration, verification, and self-improvement." />
-  <meta property="og:title" content="A-Society — An agentic harness for project work" />
+  <meta name="description" content="A-Society is a reusable, portable agentic harness for any project: structured memory, role-based workflows, runtime orchestration, verification, and self-improvement." />
+  <meta property="og:title" content="A-Society — An agentic harness for any project" />
   <meta property="og:description" content="A well-harnessed project makes a good agent reliable. A poorly harnessed project makes a great agent guess." />
   <meta property="og:type" content="website" />
-  <title>A-Society — An agentic harness for project work</title>
+  <title>A-Society — An agentic harness for any project</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -386,17 +386,6 @@
       padding: 2.5rem 3rem;
       margin: 2rem 0;
     }
-    .core-bet-quote::before {
-      content: '\201C';
-      position: absolute;
-      top: -0.5rem;
-      left: 2rem;
-      font-size: 6rem;
-      line-height: 1;
-      color: var(--accent);
-      opacity: 0.25;
-      font-family: Georgia, serif;
-    }
     .core-bet-quote p {
       font-size: clamp(1.125rem, 2.5vw, 1.375rem);
       font-weight: 500;
@@ -562,57 +551,6 @@
       padding: 0.1em 0.4em;
       border-radius: 3px;
     }
-
-    /* ─── WHAT'S INSIDE ─────────────────────────────────── */
-    .whats-inside {
-      padding: 5rem 0;
-      border-top: 1px solid var(--border);
-    }
-    .inside-header {
-      margin-bottom: 3rem;
-    }
-    .inside-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .inside-table thead {
-      background: var(--bg-2);
-    }
-    .inside-table th {
-      padding: 0.75rem 1.25rem;
-      text-align: left;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      border-bottom: 1px solid var(--border);
-    }
-    .inside-table td {
-      padding: 0.875rem 1.25rem;
-      font-size: 0.9375rem;
-      vertical-align: top;
-      border-bottom: 1px solid var(--border);
-    }
-    .inside-table tbody tr:last-child td { border-bottom: none; }
-    .inside-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
-    .inside-table .path {
-      font-family: var(--mono);
-      font-size: 0.875rem;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-    .inside-table .desc { color: var(--text-2); line-height: 1.55; }
-    .inside-table .owner {
-      font-size: 0.8125rem;
-      color: var(--text-3);
-      white-space: nowrap;
-    }
-
     /* ─── QUICK START ───────────────────────────────────── */
     .quickstart {
       padding: 5rem 0;
@@ -876,7 +814,7 @@
       </div>
       <h1 class="hero-heading">
         <span class="line-1">An agentic harness</span><br/>
-        <span class="line-2">for project work.</span>
+        <span class="line-2">for any project.</span>
       </h1>
       <p class="hero-sub">
         Structured memory, role-based workflows, runtime orchestration,
@@ -890,7 +828,7 @@
         </a>
       </div>
       <p class="hero-note">
-        Or: <code>curl -fsSL https://a-society.ai/install.sh | bash</code>
+        Or: <code>curl -fsSL https://a-society.dev/install.sh | bash</code>
       </p>
     </div>
   </section>
@@ -1074,51 +1012,6 @@
   </section>
 
   <!-- ── WHAT'S INSIDE ────────────────────────────────────── -->
-  <section class="whats-inside" id="inside">
-    <div class="container">
-      <div class="inside-header" data-a>
-        <span class="section-label">What's inside</span>
-        <h2 class="section-heading">The full harness</h2>
-        <p class="section-sub">Each folder has a distinct role in the framework. Nothing is incidental.</p>
-      </div>
-      <table class="inside-table" data-a data-d="1">
-        <thead>
-          <tr>
-            <th>Path</th>
-            <th>Contents</th>
-            <th>Owner</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="path">runtime/</td>
-            <td class="desc">Executable layer, browser UI, flow lifecycle, session management, model gateway, and OpenTelemetry observability</td>
-            <td class="owner">Orchestration Dev</td>
-          </tr>
-          <tr>
-            <td class="path">general/instructions/</td>
-            <td class="desc">How-to guides for every <code style="font-family:var(--mono);font-size:0.8125rem;color:var(--accent);background:var(--accent-dim);padding:0.1em 0.4em;border-radius:3px">a-docs/</code> artifact type — vision, structure, roles, indexes, workflow, records, and more</td>
-            <td class="owner">Curator</td>
-          </tr>
-          <tr>
-            <td class="path">general/roles/</td>
-            <td class="desc">Universal role templates applicable to any project type — Owner, and other universally-applicable roles</td>
-            <td class="owner">Curator</td>
-          </tr>
-          <tr>
-            <td class="path">general/project-types/</td>
-            <td class="desc">Category-specific templates: the Technical Architect role for projects with an executable layer; other categories added from feedback</td>
-            <td class="owner">Curator + Owner</td>
-          </tr>
-          <tr>
-            <td class="path">a-docs/</td>
-            <td class="desc">A-Society's own agent documentation — the dogfooding layer. Same structure as every initialized project.</td>
-            <td class="owner">Owner + Curator</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
 
   <!-- ── QUICK START ──────────────────────────────────────── -->
   <section class="quickstart" id="quickstart">
@@ -1188,7 +1081,7 @@
 
       <div class="qs-script" data-a>
         <p>Run the install script to clone and install in one step</p>
-        <pre>curl -fsSL https://a-society.ai/install.sh | bash</pre>
+        <pre>curl -fsSL https://a-society.dev/install.sh | bash</pre>
       </div>
 
       <div class="qs-cta" data-a>

@@ -2,11 +2,11 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://a-society.ai',
+  site: 'https://a-society.dev',
   integrations: [
     starlight({
       title: 'A-Society',
-      description: 'An agentic harness for project work: structured memory, role-based workflows, runtime orchestration, verification, and self-improvement.',
+      description: 'An agentic harness for any project: structured memory, role-based workflows, runtime orchestration, verification, and self-improvement.',
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: false,
