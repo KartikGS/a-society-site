@@ -18,6 +18,14 @@ export default defineConfig({
         { label: 'Getting Started', link: '/docs/getting-started' },
         { label: 'Runtime Guide', link: '/docs/runtime-guide' },
         { label: 'Concepts', link: '/docs/concepts' },
+        {
+          label: 'Internals',
+          items: [
+            { label: 'Architecture', link: '/internals/architecture' },
+            { label: 'Flow State', link: '/internals/flow-state' },
+            { label: 'Role Sessions', link: '/internals/role-sessions' },
+          ],
+        },
       ],
       customCss: ['./src/styles/starlight-custom.css'],
       favicon: '/favicon.svg',
