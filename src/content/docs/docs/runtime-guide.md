@@ -137,33 +137,11 @@ You interact with the Owner through a standard chat interface. The Owner may ask
 
 ## Backward pass and improvement protocol
 
-When the forward pass closes, the runtime pauses and offers three options — **graph-based**, **parallel**, or **none**. This is a per-flow decision; your choice here does not carry over to future flows.
+When the forward pass closes, the runtime pauses and offers three options — **graph-based**, **parallel**, or **none**. Both meta-analysis and feedback are optional, and your choice applies only to the current flow.
 
-### Graph-based meta-analysis
+After meta-analysis completes, the runtime asks separately whether to run a feedback pass. This is a second, independent consent gate. If you approve, a feedback artifact is written locally to `a-society/feedback/{project}-{flow-id}.md` for your review. The runtime does not submit anything automatically.
 
-The runtime computes the backward-pass order from the workflow DAG. Roles run in reverse order of their first appearance in the forward pass — terminal roles reflect first, earlier roles reflect later. Roles that ran later in the forward pass inject their findings into earlier roles as they complete, so each role can see what its downstream counterpart observed before writing its own findings.
-
-This mode is appropriate when the workflow has a meaningful dependency chain and you want each role's reflection to be informed by what came after it.
-
-### Parallel meta-analysis
-
-All non-Owner roles run their findings sessions concurrently, without waiting for or reading each other's output. The Owner runs after all of them complete. No findings are cross-injected between peer roles.
-
-This mode is faster and appropriate for flows where the roles worked independently and cross-role dependency in the reflection is not needed.
-
-### Findings files
-
-Each participating role writes a findings file to `{record-folder}/findings/{role}-findings.md`. The runtime enforces the exact path and verifies the file exists before accepting the role's handoff. In graph-based mode, these files are injected into predecessor roles as context. In both modes, all findings files are injected into the feedback step.
-
-### Upstream feedback
-
-A-Society is itself a framework that evolves. As you use it across projects, the agents running inside it will encounter gaps, ambiguities, or patterns that could make the framework better for everyone. The upstream feedback step is how those observations get captured.
-
-After meta-analysis completes, the runtime asks separately whether to run a feedback pass. This is a second consent gate — independent of your meta-analysis choice. If you approve, a dedicated feedback role reviews all the findings from the just-completed backward pass and produces a single markdown report identifying what, if anything, should change in A-Society itself — not in your project's `a-docs/`, but in the shared framework layer.
-
-The report is written locally to `a-society/feedback/{project}-{flow-id}.md`. It is for your review. You read it, decide whether the suggestions are worth sharing, redact anything sensitive, and optionally open a pull request to the A-Society repository. The runtime does not do this automatically — the file includes a suggested PR title and body so the submission is low-friction when you do choose to share.
-
-If you decline, the flow closes with no feedback artifact. Approval for one flow does not carry over to future flows.
+See [Concepts — What is the backward pass?](/docs/concepts#what-is-the-backward-pass) for a detailed explanation of how meta-analysis sessions work, what findings files contain, how graph-based and parallel modes differ, and what the feedback phase produces.
 
 ---
 

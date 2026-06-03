@@ -18,7 +18,6 @@ export default defineConfig({
         { label: 'Getting Started', link: '/docs/getting-started' },
         { label: 'Runtime Guide', link: '/docs/runtime-guide' },
         { label: 'Concepts', link: '/docs/concepts' },
-        { label: 'FAQ', link: '/docs/faq' },
       ],
       customCss: ['./src/styles/starlight-custom.css'],
       favicon: '/favicon.svg',

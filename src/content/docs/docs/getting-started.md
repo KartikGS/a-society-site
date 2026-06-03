@@ -98,4 +98,3 @@ When the forward pass closes, the runtime optionally runs a backward-pass meta-a
 
 - [Runtime Guide](/docs/runtime-guide) — full reference for the browser UI and operator-facing behavior
 - [Concepts](/docs/concepts) — mental models for `a-docs/`, roles, workflows, flows, and the backward pass
-- [FAQ](/docs/faq) — common questions
