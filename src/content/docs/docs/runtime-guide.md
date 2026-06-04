@@ -20,6 +20,7 @@ The runtime starts at **[http://localhost:3000](http://localhost:3000)** by defa
 |---|---|---|
 | `A_SOCIETY_UI_PORT` | `3000` | HTTP port for the local server |
 | `A_SOCIETY_WORKSPACE_ROOT` | `INIT_CWD` or `cwd` | Absolute path to the workspace root |
+| `A_SOCIETY_STATE_DIR` | `{workspaceRoot}/.a-society/state` | Override the directory where flow state and role sessions are stored |
 | `A_SOCIETY_TELEMETRY_ENABLED` | `true` | Set to `false` to disable telemetry bootstrapping |
 | `A_SOCIETY_OTLP_ENDPOINT` | — | OTLP/HTTP collector endpoint |
 | `A_SOCIETY_OTLP_HEADERS` | — | Comma-separated `key=value` headers for the OTLP exporter |

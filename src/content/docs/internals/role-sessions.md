@@ -8,10 +8,12 @@ description: How role sessions are stored — the RoleSession object, transcript
 Each role instance in a flow gets its own persisted session. Sessions are stored under the flow's state directory:
 
 ```
-.a-society/state/{projectNamespace}/{flowId}/roles/{roleInstanceId}/
+{stateRoot}/{projectNamespace}/{flowId}/roles/{roleInstanceId}/
   transcript.json   ← RoleSession object (system prompt + full conversation history)
   feed.json         ← FeedItem array (operator-facing UI feed)
 ```
+
+The state root defaults to `{workspaceRoot}/.a-society/state` but can be overridden with the `A_SOCIETY_STATE_DIR` environment variable (`state-paths.ts: getStateRoot`).
 
 `SessionStore.saveRoleSession` serializes to `transcript.json`. `SessionStore.loadRoleSession` reads it back. The role key is the `instanceRoleId` (e.g. `owner`, `curator`, `owner_2`).
 
@@ -57,7 +59,7 @@ Roles reuse their session as they move from node to node — the history accumul
 
 ### `currentNodeContext`
 
-Tracks the messages exchanged at the current node, separate from the full `transcriptHistory`. Used for compaction — when context is compacted, the current node's exchanges are preserved as-is and only earlier history is summarized.
+Tracks the messages exchanged at the current node, separate from the full `transcriptHistory`. Used as the input to compaction — the current node's exchanges are fed into an LLM turn that produces a summary. That summary, combined with programmatic flow context, replaces the entire `transcriptHistory` as a single message. Prior nodes' history is not summarized — it is discarded (archived in `compactionArchives` for debugging only).
 
 Structure: `{ nodeId: string; exchanges: RuntimeMessageParam[] }`.
 
@@ -91,7 +93,7 @@ Array of compaction records. Each entry is:
 }
 ```
 
-When compaction runs, the full `transcriptHistory` up to (but not including) the current node's exchanges is archived here and replaced with a single summary message. The original history is retained in the archive for debugging.
+When compaction runs, the full `transcriptHistory` (including the current node's exchanges) is archived here, and the entire history is replaced with a single summary message. The original history is retained in the archive for debugging.
 
 ---
 

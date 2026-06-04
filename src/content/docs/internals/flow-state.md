@@ -8,8 +8,10 @@ description: The FlowRun object — what it contains, how each field is populate
 The runtime's source of truth for an active flow is a single JSON object — `FlowRun` — persisted at:
 
 ```
-.a-society/state/{projectNamespace}/{flowId}/flow.json
+{stateRoot}/{projectNamespace}/{flowId}/flow.json
 ```
+
+The state root defaults to `{workspaceRoot}/.a-society/state` but can be overridden with the `A_SOCIETY_STATE_DIR` environment variable (`state-paths.ts: getStateRoot`).
 
 `SessionStore.saveFlowRun` writes it; `SessionStore.loadFlowRun` reads and validates it. All mutations go through `SessionStore.updateFlowRun`, which serializes concurrent writes using a per-flow async lock so no two coroutines corrupt each other's state.
 
@@ -19,13 +21,17 @@ The runtime's source of truth for an active flow is a single JSON object — `Fl
 
 ## Identity fields
 
-| Field | Type | Description |
-|---|---|---|
-| `flowId` | `string` | Unique timestamp-based ID (e.g. `20260527T143000123Z-a1b2c3`). Set at flow creation, never changes. |
-| `projectNamespace` | `string` | The project subfolder name (e.g. `my-project`). Together with `flowId` forms the `FlowRef` used everywhere. |
-| `workspaceRoot` | `string` | Absolute path to the workspace root. Verified on load — a mismatch throws rather than silently proceeding. |
-| `recordFolderPath` | `string` | Absolute path to the flow's record folder inside the project. Contains `workflow.yaml`, `record.yaml`, and all artifacts. |
-| `stateVersion` | `string` | Schema version string. Current value is `CURRENT_FLOW_STATE_VERSION` in `types.ts`. Load fails if this doesn't match — flows cannot be reopened after a breaking schema change. |
+<table>
+<colgroup><col style="width: 14rem"></colgroup>
+<thead><tr><th>Field</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>flowId</code></td><td>Unique timestamp-based ID (e.g. <code>20260527T143000123Z-a1b2c3</code>). Set at flow creation, never changes.</td></tr>
+<tr><td><code>projectNamespace</code></td><td>The project subfolder name (e.g. <code>my-project</code>). Together with <code>flowId</code> forms the <code>FlowRef</code> used everywhere.</td></tr>
+<tr><td><code>workspaceRoot</code></td><td>Absolute path to the workspace root. Verified on load — a mismatch throws rather than silently proceeding.</td></tr>
+<tr><td><code>recordFolderPath</code></td><td>Absolute path to the flow's record folder inside the project. Contains <code>workflow.yaml</code>, <code>record.yaml</code>, and all artifacts.</td></tr>
+<tr><td><code>stateVersion</code></td><td>Schema version string. Current value is <code>CURRENT_FLOW_STATE_VERSION</code> in <code>types.ts</code>. Load fails if this doesn't match — flows cannot be reopened after a breaking schema change.</td></tr>
+</tbody>
+</table>
 
 ---
 
@@ -56,7 +62,7 @@ Only one node per role instance can be in `runningNodes` at a time — the sched
 | Reason | Cause |
 |---|---|
 | `prompt-human` | Agent emitted a `prompt-human` signal |
-| `autonomous-abort` | Turn returned `null` without a handoff |
+| `autonomous-abort` | Turn aborted or errored without producing a handoff |
 | `consent` | A consent prompt is in-flight (transitional — rarely persisted) |
 | `consent-denied` | A tool call was denied and the turn was stopped |
 
