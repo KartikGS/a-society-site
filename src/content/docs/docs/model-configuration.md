@@ -3,7 +3,7 @@ title: Model Configuration
 description: How to configure providers, models, context windows, and reasoning for the A-Society runtime.
 ---
 
-Model configuration is managed through the Settings panel in the browser UI (gear icon, any view). Settings are persisted locally to `.a-society/settings.json`; API keys are stored separately in `.a-society/secrets.json`. Both files are written with mode `0600`. The directory can be overridden with the `A_SOCIETY_SETTINGS_DIR` environment variable.
+Model configuration is managed through the Settings panel in the browser UI (gear icon, any view). Settings are persisted locally to `.a-society/settings.json`; API keys are stored separately in `.a-society/secrets.json`. Both files are written with mode `0600`.
 
 On first launch, the Settings panel opens automatically and blocks navigation until at least one model is configured and activated.
 

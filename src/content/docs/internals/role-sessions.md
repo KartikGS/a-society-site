@@ -13,7 +13,7 @@ Each role instance in a flow gets its own persisted session. Sessions are stored
   feed.json         ← FeedItem array (operator-facing UI feed)
 ```
 
-The state root defaults to `{workspaceRoot}/.a-society/state` but can be overridden with the `A_SOCIETY_STATE_DIR` environment variable (`state-paths.ts: getStateRoot`).
+The state root is `{workspaceRoot}/.a-society/state`.
 
 `SessionStore.saveRoleSession` serializes to `transcript.json`. `SessionStore.loadRoleSession` reads it back. The role key is the `instanceRoleId` (e.g. `owner`, `curator`, `owner_2`).
 

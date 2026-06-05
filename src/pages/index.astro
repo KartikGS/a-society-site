@@ -43,7 +43,7 @@
 
     /* ─── Reset ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       background-color: var(--bg);
       color: var(--text);
@@ -748,6 +748,38 @@
       font-family: var(--mono);
     }
 
+    /* ─── MOBILE MENU ───────────────────────────────────── */
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 57px;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background: rgba(7, 8, 10, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem 1.5rem;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+      color: var(--text-2);
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-mobile-menu a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .nav-mobile-menu .btn-primary {
+      margin-top: 0.5rem;
+      text-align: center;
+      justify-content: center;
+      color: #07080a;
+    }
+
     /* ─── RESPONSIVE ────────────────────────────────────── */
     @media (max-width: 900px) {
       .problem-content { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -755,6 +787,7 @@
       .how-grid { grid-template-columns: 1fr; gap: 2rem; }
       .qs-steps { grid-template-columns: 1fr; }
       .nav-links { display: none; }
+      .nav-cta { display: none; }
       .nav-mobile-toggle { display: block; }
     }
     @media (max-width: 640px) {
@@ -762,6 +795,7 @@
       .btn-hero-primary, .btn-hero-ghost { text-align: center; justify-content: center; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
       .core-bet-quote { padding: 1.75rem 1.5rem; }
+      .qs-script pre { max-width: 100%; overflow-x: auto; display: block; text-align: left; }
     }
   </style>
 </head>
@@ -800,6 +834,14 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </nav>
+
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a href="/docs/getting-started">Docs</a>
+    <a href="/docs/concepts">Concepts</a>
+    <a href="/docs/runtime-guide">Runtime</a>
+    <a href="https://github.com/KartikGS/a-society" target="_blank" rel="noopener">GitHub</a>
+    <a href="/docs/getting-started" class="btn btn-primary">Get Started</a>
+  </div>
 
   <!-- ── HERO ────────────────────────────────────────────── -->
   <section class="hero">
@@ -1147,6 +1189,27 @@
         ? 'rgba(255,255,255,0.1)'
         : 'rgba(255,255,255,0.07)';
     }, { passive: true });
+
+    // Mobile menu toggle
+    const mobileToggle = document.querySelector('.nav-mobile-toggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = mobileMenu.classList.toggle('open');
+      mobileToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#mobileMenu') && !e.target.closest('.nav-mobile-toggle')) {
+        mobileMenu.classList.remove('open');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    mobileMenu.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
   </script>
 </body>
 </html>

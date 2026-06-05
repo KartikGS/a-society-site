@@ -11,7 +11,7 @@ The runtime's source of truth for an active flow is a single JSON object — `Fl
 {stateRoot}/{projectNamespace}/{flowId}/flow.json
 ```
 
-The state root defaults to `{workspaceRoot}/.a-society/state` but can be overridden with the `A_SOCIETY_STATE_DIR` environment variable (`state-paths.ts: getStateRoot`).
+The state root is `{workspaceRoot}/.a-society/state`.
 
 `SessionStore.saveFlowRun` writes it; `SessionStore.loadFlowRun` reads and validates it. All mutations go through `SessionStore.updateFlowRun`, which serializes concurrent writes using a per-flow async lock so no two coroutines corrupt each other's state.
 
