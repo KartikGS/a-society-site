@@ -17,6 +17,7 @@ export default defineConfig({
       sidebar: [
         { label: 'Getting Started', link: '/docs/getting-started' },
         { label: 'Runtime Guide', link: '/docs/runtime-guide' },
+        { label: 'Model Configuration', link: '/docs/model-configuration' },
         { label: 'Concepts', link: '/docs/concepts' },
         {
           label: 'Internals',
