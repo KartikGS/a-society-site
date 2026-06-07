@@ -7,9 +7,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A-Society is a reusable, portable agentic harness for any project: structured memory, role-based workflows, runtime orchestration, verification, and self-improvement." />
+  <meta name="description" content="A-Society is an early, experimental agentic harness for any project: structured memory, role-based workflows, self-improvement, and cross-project feedback." />
   <meta property="og:title" content="A-Society — An agentic harness for any project" />
-  <meta property="og:description" content="A well-harnessed project makes a good agent reliable. A poorly harnessed project makes a great agent guess." />
+  <meta property="og:description" content="An early, experimental agentic harness for any project: structured memory, role-based workflows, self-improvement, and cross-project feedback." />
   <meta property="og:type" content="website" />
   <title>A-Society — An agentic harness for any project</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -327,81 +327,6 @@
       line-height: 1.7;
     }
 
-    /* ─── PROBLEM ───────────────────────────────────────── */
-    .problem {
-      padding: 5rem 0 4rem;
-      border-top: 1px solid var(--border);
-    }
-    .problem-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-    .problem-text .section-sub {
-      max-width: none;
-    }
-    .problem-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.875rem;
-    }
-    .problem-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.875rem;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 0.875rem 1.125rem;
-    }
-    .problem-icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      color: #f87171;
-      margin-top: 1px;
-    }
-    .problem-item p {
-      font-size: 0.9375rem;
-      color: var(--text-2);
-      line-height: 1.55;
-    }
-    .problem-item strong { color: var(--text); font-weight: 500; }
-
-    /* ─── CORE BET ──────────────────────────────────────── */
-    .core-bet {
-      padding: 5rem 0;
-    }
-    .core-bet-inner {
-      max-width: 800px;
-      margin-inline: auto;
-      text-align: center;
-    }
-    .core-bet-quote {
-      position: relative;
-      background: linear-gradient(135deg, rgba(94,234,212,0.06) 0%, rgba(129,140,248,0.06) 100%);
-      border: 1px solid rgba(94,234,212,0.2);
-      border-radius: var(--radius);
-      padding: 2.5rem 3rem;
-      margin: 2rem 0;
-    }
-    .core-bet-quote p {
-      font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-      font-weight: 500;
-      line-height: 1.6;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      position: relative;
-      z-index: 1;
-    }
-    .core-bet-tagline {
-      font-size: 1.0625rem;
-      color: var(--text-2);
-      line-height: 1.7;
-    }
-    .core-bet-tagline strong { color: var(--accent); font-weight: 500; }
-
     /* ─── FEATURES ──────────────────────────────────────── */
     .features {
       padding: 5rem 0;
@@ -413,7 +338,7 @@
     }
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.25rem;
     }
     .feature-card {
@@ -782,7 +707,6 @@
 
     /* ─── RESPONSIVE ────────────────────────────────────── */
     @media (max-width: 900px) {
-      .problem-content { grid-template-columns: 1fr; gap: 2.5rem; }
       .features-grid { grid-template-columns: 1fr; }
       .how-grid { grid-template-columns: 1fr; gap: 2rem; }
       .qs-steps { grid-template-columns: 1fr; }
@@ -794,7 +718,6 @@
       .hero-actions { flex-direction: column; align-items: stretch; }
       .btn-hero-primary, .btn-hero-ghost { text-align: center; justify-content: center; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-      .core-bet-quote { padding: 1.75rem 1.5rem; }
       .qs-script pre { max-width: 100%; overflow-x: auto; display: block; text-align: left; }
     }
   </style>
@@ -851,15 +774,15 @@
     <div class="hero-inner">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
-        MIT License &middot; Node &ge; 18 &middot; Open Source
+        Early &amp; experimental &middot; MIT License &middot; Open Source
       </div>
       <h1 class="hero-heading">
         <span class="line-1">An agentic harness</span><br/>
         <span class="line-2">for any project.</span>
       </h1>
       <p class="hero-sub">
-        Structured memory, role-based workflows, runtime orchestration,
-        verification, and self-improvement — for any project that works with AI agents.
+        Structured memory, role-based workflows, self-improvement, and
+        cross-project feedback — for any project that works with AI agents.
       </p>
       <div class="hero-actions">
         <a href="/docs/getting-started" class="btn-hero-primary">Get Started →</a>
@@ -874,79 +797,12 @@
     </div>
   </section>
 
-  <!-- ── THE PROBLEM ─────────────────────────────────────── -->
-  <section class="problem" id="problem">
-    <div class="container">
-      <div class="problem-content">
-        <div class="problem-text" data-a>
-          <span class="section-label">The Problem</span>
-          <h2 class="section-heading">The bottleneck isn't capability</h2>
-          <p class="section-sub">
-            Most projects aren't set up for agents. There's no declared workflow,
-            no structured context, no role boundary, no durable record of decisions.
-            Agents landing in these environments must guess, infer from scattered files,
-            or ask repeated clarifying questions.
-          </p>
-          <p class="section-sub" style="margin-top:0.75rem">
-            The bottleneck isn't capability — it's the operating environment.
-          </p>
-        </div>
-        <div class="problem-list">
-          <div class="problem-item" data-a data-d="1">
-            <svg class="problem-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-            </svg>
-            <p><strong>No session memory.</strong> Every new session arrives cold. Conventions, decisions, and context must be re-established every time.</p>
-          </div>
-          <div class="problem-item" data-a data-d="2">
-            <svg class="problem-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-            </svg>
-            <p><strong>No role boundaries.</strong> One agent plans, implements, and reviews its own work — with no structural friction or second perspective.</p>
-          </div>
-          <div class="problem-item" data-a data-d="3">
-            <svg class="problem-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-            </svg>
-            <p><strong>No workflow authority.</strong> The sequence of work is implicit. Nothing enforces completeness, handoffs, or closure checks.</p>
-          </div>
-          <div class="problem-item" data-a data-d="4">
-            <svg class="problem-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-            </svg>
-            <p><strong>No feedback loop.</strong> Friction from completed work never improves the defaults for the next flow.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CORE BET ─────────────────────────────────────────── -->
-  <section class="core-bet" id="core-bet">
-    <div class="container">
-      <div class="core-bet-inner" data-a>
-        <span class="section-label">The Core Bet</span>
-        <div class="core-bet-quote">
-          <p>
-            The quality of agent output is determined more by the quality of the
-            project's harness — its structure, workflow, memory, verification, and
-            feedback loops — than by the capability of the agent alone.
-          </p>
-        </div>
-        <p class="core-bet-tagline">
-          <strong>A well-harnessed project makes a good agent reliable.</strong><br/>
-          A poorly harnessed project makes a great agent guess.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <!-- ── FEATURES ────────────────────────────────────────── -->
   <section class="features" id="features">
     <div class="container">
       <div class="features-header" data-a>
         <span class="section-label">What a project gets</span>
-        <h2 class="section-heading">The harness, not just the agent</h2>
+        <h2 class="section-heading">What the harness is designed to give a project</h2>
       </div>
       <div class="features-grid">
         <div class="feature-card" data-a data-d="1">
@@ -954,8 +810,8 @@
           <h3 class="feature-title">Structured Memory</h3>
           <p class="feature-desc">
             <code style="font-family:var(--mono);font-size:0.8125rem;color:var(--accent);background:var(--accent-dim);padding:0.1em 0.4em;border-radius:3px">a-docs/</code>
-            preserves roles, rules, indexes, and standing project truth across sessions.
-            Orientation takes minutes, not conversations.
+            is designed to preserve roles, rules, indexes, and standing project truth
+            across sessions — so orientation takes minutes, not conversations.
           </p>
           <span class="feature-tag">a-docs/</span>
         </div>
@@ -963,21 +819,28 @@
           <div class="feature-icon">⚡</div>
           <h3 class="feature-title">Workflow Execution</h3>
           <p class="feature-desc">
-            The runtime routes work through explicit roles, enforces handoffs, preserves
-            sequenced flow records, and runs closure checks. Completeness is structural,
-            not self-assessed.
+            The runtime aims to route work through explicit roles, handoffs, records,
+            and closure checks — so completeness is structural, not self-assessed.
           </p>
           <span class="feature-tag">runtime/</span>
         </div>
         <div class="feature-card" data-a data-d="3">
           <div class="feature-icon">🔄</div>
-          <h3 class="feature-title">Cross-Project Learning</h3>
+          <h3 class="feature-title">Self-Improvement</h3>
           <p class="feature-desc">
-            Backward-pass findings and optional upstream feedback improve universal templates,
-            project-type standards, and initialization defaults — so future projects benefit
-            from work done today.
+            After a flow, a backward pass turns what happened into findings that
+            improve the project's own docs.
           </p>
-          <span class="feature-tag">general/</span>
+          <span class="feature-tag">backward pass</span>
+        </div>
+        <div class="feature-card" data-a data-d="4">
+          <div class="feature-icon">🌐</div>
+          <h3 class="feature-title">Cross-Project Feedback</h3>
+          <p class="feature-desc">
+            With your consent, the same findings can be distilled into a report that
+            improves A-Society's reusable templates.
+          </p>
+          <span class="feature-tag">a-society/feedback/</span>
         </div>
       </div>
     </div>
@@ -988,7 +851,7 @@
     <div class="container">
       <div data-a>
         <span class="section-label">How It Works</span>
-        <h2 class="section-heading">Sits beside your project, not inside it</h2>
+        <h2 class="section-heading">Sits beside your project, and drives every session</h2>
       </div>
       <div class="how-grid">
         <div class="how-tree" data-a data-d="1">
@@ -1013,38 +876,39 @@
         </div>
         <div class="how-steps" data-a data-d="2">
           <div class="how-step">
-            <div class="how-step-num">1</div>
             <div class="how-step-content">
-              <h4>Clone the framework</h4>
-              <p>Place <code>a-society/</code> in a workspace folder alongside your project. It never modifies your project files.</p>
+              <h4>Model configuration</h4>
+              <p>In Settings you pick a provider, paste an API key, and set the model ID and context-window size. Keys and settings stay local to your workspace.</p>
             </div>
           </div>
           <div class="how-step">
-            <div class="how-step-num">2</div>
             <div class="how-step-content">
-              <h4>Start the runtime</h4>
-              <p>The runtime provides a local web server and browser UI at <code>localhost:3000</code>. No cloud required.</p>
+              <h4>Context injection</h4>
+              <p>When a role's session begins, the runtime assembles a context bundle: who it is, the contracts it must follow, and its required reading — resolved through the project's index. Each agent loads only what its job needs.</p>
             </div>
           </div>
           <div class="how-step">
-            <div class="how-step-num">3</div>
             <div class="how-step-content">
-              <h4>Configure your model</h4>
-              <p>Set your LLM provider, API key, and model ID in Settings. Works with Anthropic, OpenAI, and compatible APIs.</p>
+              <h4>Handoffs</h4>
+              <p>Roles pass work through small machine-readable handoff blocks naming the next step and its artifact. A step can only hand off to its direct neighbors, and every handoff is persisted so a flow survives a restart.</p>
             </div>
           </div>
           <div class="how-step">
-            <div class="how-step-num">4</div>
             <div class="how-step-content">
-              <h4>Initialize your project</h4>
-              <p>The runtime scaffolds the compulsory <code>a-docs/</code> surfaces and runs an Owner-led initialization flow to fill them with project truth.</p>
+              <h4>Records</h4>
+              <p>Every flow gets its own folder under <code>.a-society/state/</code> holding the workflow snapshot, plan, handoff artifacts, and findings — the durable memory of what happened and why.</p>
             </div>
           </div>
           <div class="how-step">
-            <div class="how-step-num">5</div>
             <div class="how-step-content">
-              <h4>Work through roles and workflows</h4>
-              <p>Every new flow is routed through the designed workflow. Agents receive structured context, act through explicit roles, and leave records.</p>
+              <h4>Self-improvement</h4>
+              <p>When a flow's forward work closes, a backward pass has each role reflect on what it did and write findings that feed back into the project's own docs.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-step-content">
+              <h4>Cross-project feedback</h4>
+              <p>After the backward pass, the runtime asks whether to share an upstream report. Only if you say yes is one written under <code>a-society/feedback/</code> — nothing leaves your machine automatically.</p>
             </div>
           </div>
         </div>
@@ -1094,11 +958,11 @@
             <span class="qs-step-title">Configure a model</span>
           </div>
 <pre><span class="comment"># In the Settings panel:</span>
-<span class="comment"># - Provider: Anthropic / OpenAI / custom</span>
+<span class="comment"># - Provider + API base URL</span>
 <span class="comment"># - API key: from your provider</span>
-<span class="comment"># - Model ID: e.g. claude-sonnet-4-6</span></pre>
+<span class="comment"># - Model ID: your model</span></pre>
           <div class="qs-step-note">
-            The Settings panel opens automatically on first launch and stays open until a model is active.
+            The Settings panel opens automatically on first launch and stays open until a model is active. Any OpenAI-compatible provider or Anthropic's API is supported.
           </div>
         </div>
 

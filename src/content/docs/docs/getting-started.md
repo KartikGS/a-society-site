@@ -9,6 +9,30 @@ A-Society is a standalone repository that sits alongside your project. This guid
 
 ---
 
+## One-line install
+
+Clone the framework and install runtime dependencies in a single step — no PATH changes, no global installs:
+
+```bash
+curl -fsSL https://a-society.dev/install.sh | bash
+```
+
+To install into a specific directory, pass it as an argument:
+
+```bash
+curl -fsSL https://a-society.dev/install.sh | bash -s -- /path/to/workspace
+```
+
+Then start the runtime and continue from Step 3 below:
+
+```bash
+npm --prefix ./a-society/runtime start
+```
+
+Prefer to set it up by hand? Follow the manual steps below.
+
+---
+
 ## Step 1 — Set up your workspace
 
 Clone A-Society into a workspace directory. Any projects you want to use with it live alongside it in the same parent folder — not inside it.
@@ -46,15 +70,11 @@ Fill in the Settings panel:
 
 | Field | What to enter |
 |---|---|
-| **Provider** | `anthropic`, `openai`, or a compatible base URL |
+| **Provider** | Any OpenAI-compatible provider (via its base URL), or Anthropic |
 | **API key** | From your provider's dashboard |
 | **Model ID** | From your provider's model catalog |
 
-**Anthropic:** Get your API key from the [Anthropic Console](https://console.anthropic.com).
-
-**OpenAI:** Get your API key from the [OpenAI Platform](https://platform.openai.com).
-
-**Compatible APIs:** Any provider offering an OpenAI-compatible base URL works. Enter the base URL in the Provider field.
+Any OpenAI-compatible provider (Hugging Face, OpenRouter, self-hosted, and others) or Anthropic's API is supported. Get your API key from your provider's dashboard, and for an OpenAI-compatible provider enter its base URL in the Provider field. See [Model Configuration](/docs/model-configuration) for provider types and reasoning options.
 
 Click **Save** then **Set as Active**. The settings panel closes and you're taken to the project selector.
 

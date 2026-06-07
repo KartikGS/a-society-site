@@ -6,7 +6,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'A-Society',
-      description: 'An agentic harness for any project: structured memory, role-based workflows, runtime orchestration, verification, and self-improvement.',
+      description: 'An agentic harness for any project: structured memory, role-based workflows, self-improvement, and cross-project feedback.',
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: false,

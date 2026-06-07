@@ -50,7 +50,7 @@ The entry point when no flow is active. Shows:
 
 Accessible from the gear icon in any view. Manages:
 
-- **Provider** — `anthropic`, `openai`, or a custom base URL
+- **Provider** — `anthropic` or `openai-compatible` (any OpenAI-compatible API, via its base URL)
 - **API Key** — stored locally; never sent anywhere except your provider
 - **Model ID** — any model your provider supports
 - **Active model** — the model used for new sessions
