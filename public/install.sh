@@ -86,6 +86,10 @@ info "Installing runtime dependencies (this may take a moment)..."
 npm --prefix "$RUNTIME_DIR" install --silent
 ok "Dependencies installed"
 
+info "Building UI assets..."
+npm --prefix "$RUNTIME_DIR" run build:ui --silent
+ok "UI built"
+
 # ── Done ──────────────────────────────────────────────────────────────────────
 printf "\n${GREEN}${BOLD}  A-Society is ready.${RESET}\n\n"
 printf "  ${DIM}Start the runtime:${RESET}\n"

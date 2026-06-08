@@ -55,6 +55,7 @@ A-Society never modifies files in your project directory. It adds an `a-docs/` f
 
 ```bash
 npm --prefix ./a-society/runtime install
+npm --prefix ./a-society/runtime run build:ui
 npm --prefix ./a-society/runtime start
 ```
 

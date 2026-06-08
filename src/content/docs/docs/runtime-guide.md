@@ -8,7 +8,8 @@ The A-Society runtime is a local Node.js server with a browser UI. This guide co
 ## Starting the runtime
 
 ```bash
-npm --prefix ./a-society/runtime install   # first time only
+npm --prefix ./a-society/runtime install        # first time only
+npm --prefix ./a-society/runtime run build:ui   # first time only
 npm --prefix ./a-society/runtime start
 ```
 
